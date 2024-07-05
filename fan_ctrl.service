@@ -1,0 +1,14 @@
+[Unit]
+Description=Overriding iDRAC control of fan speeds on Power Edge R730XD
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -u /usr/local/sbin/fan_ctrl.py
+ExecStopPost=/usr/bin/ipmitool raw 0x30 0x30 0x01 0x01
+Restart=always
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
